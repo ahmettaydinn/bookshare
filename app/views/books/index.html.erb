@@ -4,7 +4,7 @@
 
 <% @books.each do |book| %>
   <div>
-    <h2><%= book.title %></h2>
+    <h2><%= link_to book.title, book_path(book) %></h2>
     <p><%= book.description %></p>
   </div>
 <% end %>
