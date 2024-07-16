@@ -1,10 +1,7 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
-  def index
-   @books = Book.includes(:user).all
 
-  end
 
   def new
     @book = Book.new
