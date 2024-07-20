@@ -1,4 +1,14 @@
-<h1><%= @book.title %></h1>
-<p><%= @book.description %></p>
-
-<%= link_to 'Back to Books', books_path %>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title"><%= @book.title %></h1>
+          <p class="card-text"><%= @book.description %></p>
+          <p class="card-text"><strong>creator:</strong> <%= @user.email %></p>
+          <%= link_to 'Back to Books', books_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
