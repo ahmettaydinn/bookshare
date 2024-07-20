@@ -1,8 +1,15 @@
-<h1>All Books</h1>
+<h1 class="mb-4">All Books</h1>
 
-<%= link_to 'New Book', new_book_path, class: 'm-2' %>
+<%= link_to 'New Book', new_book_path, class: 'btn btn-primary mb-4 ms-2' %>
 
-<div id="cardsContainer">
+<%= form_with url: root_path, method: :get, local: true, class: 'mb-3 p-3 border rounded' do %>
+  <div class="input-group">
+    <%= text_field_tag :search, params[:search], placeholder: 'Search books...', class: 'form-control' %>
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
+<% end %>
+
+<div id="cardsContainer" class="d-flex flex-wrap">
   <% @books.each do |book| %>
     <div class="card" style="width: 14rem; height: auto; margin: 5px">
       <% if book.image_path.present? %>
