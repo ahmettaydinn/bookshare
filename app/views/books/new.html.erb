@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <h1>New Book</h1>
 
-  <%= form_with(model: @book, local: true, class: 'mt-4') do |form| %>
+  <%= form_with(model: @book, local: true, class: 'mt-4', html: { multipart: true }) do |form| %>
     <% if @book.errors.any? %>
       <div id="error_explanation" class="alert alert-danger">
         <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
@@ -25,8 +25,8 @@
     </div>
 
     <div class="mb-3">
-      <%= form.label :image_path, 'Image URL', class: 'form-label' %>
-      <%= form.text_field :image_path, class: 'form-control', style: 'width: 600px;' %>
+      <%= form.label :image, 'Image', class: 'form-label' %>
+      <%= form.file_field :image, class: 'form-control', style: 'width: 600px;' %>
     </div>
 
     <div class="mb-3">
