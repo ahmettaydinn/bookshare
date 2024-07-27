@@ -1,27 +1,29 @@
-<h1>All Books</h1>
+<h1 class="mb-4">All Books</h1>
 
-<%= link_to 'New Book', new_book_path, class: 'm-2' %>
+<%= link_to 'New Book', new_book_path, class: 'btn btn-primary mb-4 ms-2' %>
 
-
-  <div id="cardsContainer">
-<% @books.each do |book| %>
-
-
-
-
-    <div class="card" style="width: 14rem; height: 150px; margin: 5px">
-  <%# <img src="..." class="card-img-top" alt="..."> %>
-  <div class="card-body">
-    <h5 class="card-title"><%= link_to book.title, book_path(book) %></h5>
-    <p class="card-text"><%= book.description %>.</p>
-<p class="card-text"><strong>creator:</strong> <%= book.user.email %></p>
-
-  </div>
-
-
-
-
-
+<%= form_with url: root_path, method: :get, local: true, class: 'mb-3 p-3 border rounded' do %>
+  <div class="input-group">
+    <%= text_field_tag :search, params[:search], placeholder: 'Search books...', class: 'form-control' %>
+    <button class="btn btn-primary" type="submit">Search</button>
   </div>
 <% end %>
+
+<div id="cardsContainer" class="d-flex flex-wrap">
+  <% @books.each do |book| %>
+    <div class="card" style="width: 14rem; height: auto; margin: 5px">
+      <% if book.image_path.present? %>
+        <div style="height: 300px; overflow: hidden;">
+          <%= image_tag book.image_path, class: 'card-img-top', style: 'width: 100%; height: 100%; object-fit: cover;' %>
+        </div>
+      <% end %>
+
+      <div class="card-body">
+        <h5 class="card-title"><%= link_to book.title, book_path(book) %></h5>
+        <p class="card-text"><%= book.description %></p>
+        <p class="card-text"><strong>Creator:</strong> <%= book.user.email %></p>
+        <%= link_to 'Delete', book, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -1,12 +1,19 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-8">
-      <div class="card">
+      <div class="card" style='width: 400px;'>
+        <% if @book.image_path.present? %>
+          <div style="height: 300px; overflow: hidden;">
+            <%= image_tag @book.image_path, class: 'card-img-top', style: 'width: 100%; height: 100%; object-fit: contain;' %>
+          </div>
+        <% end %>
+
         <div class="card-body">
           <h1 class="card-title"><%= @book.title %></h1>
           <p class="card-text"><%= @book.description %></p>
-          <p class="card-text"><strong>creator:</strong> <%= @user.email %></p>
+          <p class="card-text"><strong>Creator:</strong> <%= @user.email %></p>
           <%= link_to 'Back to Books', root_path, class: "btn btn-primary" %>
+          <%= link_to 'Delete', @book, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ms-2' %>
         </div>
       </div>
     </div>

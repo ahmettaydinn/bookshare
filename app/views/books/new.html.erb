@@ -25,8 +25,13 @@
     </div>
 
     <div class="mb-3">
+      <%= form.label :image_path, 'Image URL', class: 'form-label' %>
+      <%= form.text_field :image_path, class: 'form-control', style: 'width: 600px;' %>
+    </div>
+
+    <div class="mb-3">
       <%= form.submit 'Create Book', class: 'btn btn-primary' %>
-      <%= link_to 'Back', books_path, class: 'btn btn-secondary ms-2' %>
+      <%= link_to 'Back', root_path, class: 'btn btn-secondary ms-2' %>
     </div>
   <% end %>
 </div>
