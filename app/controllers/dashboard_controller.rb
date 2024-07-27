@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
 
   def index
     # Fetch only books belonging to the current user
-    @books = current_user.books.includes(:user)
+    @books = Book.includes(:user).where.not(users: { id: current_user.id })
 
     # Apply search filter if present
     if params[:search].present?
