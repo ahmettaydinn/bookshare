@@ -12,9 +12,9 @@
 <div id="cardsContainer" class="d-flex flex-wrap">
   <% @books.each do |book| %>
     <div class="card" style="width: 14rem; height: auto; margin: 5px">
-      <% if book.image_path.present? %>
+      <% if book.image.attached? %>
         <div style="height: 300px; overflow: hidden;">
-          <%= image_tag book.image_path, class: 'card-img-top', style: 'width: 100%; height: 100%; object-fit: cover;' %>
+          <%= image_tag book.image, class: 'card-img-top', style: 'width: 100%; height: 100%; object-fit: cover;' %>
         </div>
       <% end %>
 
