@@ -6,14 +6,7 @@ Rails.application.routes.draw do
   root to: "dashboard#index"
 
   resources :books, only: [:new, :create, :show, :destroy] do
-    resources :comments, only: [:create, :destroy], controller: 'books' do
-      collection do
-        post 'create_comment'
-      end
-
-      member do
-        delete 'destroy_comment'
-      end
+    resources :comments, only: [:create, :destroy] do
     end
   end
 end
