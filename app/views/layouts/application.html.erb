@@ -13,6 +13,17 @@
 
   <body>
     <%= render 'shared/navbar' %>
+
+    <!-- Flash messages -->
+    <div class="container mt-4">
+      <% flash.each do |key, message| %>
+        <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>
