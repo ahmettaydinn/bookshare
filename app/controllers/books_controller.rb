@@ -17,6 +17,7 @@ class BooksController < ApplicationController
 
   def show
     @user = @book.user
+    @comment = Comment.new
   end
 
   def destroy

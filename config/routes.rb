@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root to: "dashboard#index"
 
-  resources :books, only: [:new, :create, :show, :destroy]
-
+  resources :books, only: [:new, :create, :show, :destroy] do
+    resources :comments, only: [:create, :destroy] do
+    end
+  end
 end
