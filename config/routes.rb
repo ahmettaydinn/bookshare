@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   root to: "dashboard#index"
 
   resources :books, only: [:new, :create, :show, :destroy] do
-    resources :comments, only: [:create, :destroy] do
-    end
+    resources :comments, only: [:create, :destroy]
+    
+    # Adding routes for favorites
+    resource :favorite, only: [:create, :destroy]
   end
+
+  # Route for user's favorite books
+  get 'favorites', to: 'favorites#index', as: :user_favorites
 end

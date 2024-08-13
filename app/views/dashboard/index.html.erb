@@ -22,7 +22,32 @@
         <h5 class="card-title"><%= link_to book.title, book_path(book) %></h5>
         <p class="card-text" id="card-description-css"><%= book.description %></p>
         <p class="card-text"><strong>Creator:</strong> <%= book.user.email %></p>
+
+        
+        <div style="display: flex;justify-content:space-between; align-items:center;">
+          <div>
         <%= link_to 'Delete', book, method: :delete, data: { confirm: 'Are you sure?', "turbo-method": :delete }, class: 'btn btn-danger' %>
+          </div>
+
+
+      <div>
+        <!-- Heart Icon -->
+        <% if current_user.favorite_books.exists?(book.id) %>
+          <%= form_with url: book_favorite_path(book), method: :delete, local: true, class: 'd-inline' do %>
+            <button type="submit" class="btn p-0" style="background: none; border: none;">
+              <i class="bi bi-heart-fill text-danger" style="font-size: 1.5rem;"></i>
+            </button>
+          <% end %>
+        <% else %>
+          <%= form_with url: book_favorite_path(book), method: :post, local: true, class: 'd-inline' do %>
+            <button type="submit" class="btn p-0" style="background: none; border: none;">
+              <i class="bi bi-heart text-danger" style="font-size: 1.5rem;"></i>
+            </button>
+          <% end %>
+        <% end %>
+      </div>
+
+        </div>
       </div>
     </div>
   <% end %>
