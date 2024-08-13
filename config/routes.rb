@@ -12,6 +12,6 @@ Rails.application.routes.draw do
     resource :favorite, only: [:create, :destroy]
   end
 
-  # Route to list all favorite books for the current user
-  resources :favorites, only: :index
+  # Route for user's favorite books
+  get 'favorites', to: 'favorites#index', as: :user_favorites
 end
