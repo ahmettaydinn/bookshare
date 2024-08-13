@@ -9,4 +9,11 @@ class Book < ApplicationRecord
 
   has_many :favorites, dependent: :destroy
   has_many :favorited_by_users, through: :favorites, source: :user
+
+  has_many :ratings
+  has_many :rated_by_users, through: :ratings, source: :user
+
+  def average_rating
+    ratings.average(:rating).to_f.round(1)
+  end
 end

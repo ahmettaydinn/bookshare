@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     
     # Adding routes for favorites
     resource :favorite, only: [:create, :destroy]
+    
+    resources :ratings, only: [:create, :update]
   end
 
   # Route for user's favorite books
