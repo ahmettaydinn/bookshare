@@ -75,3 +75,21 @@ add_book_to_favorites(user1, book1)
 add_book_to_favorites(user1, book3)
 add_book_to_favorites(user2, book2)
 add_book_to_favorites(user2, book4)
+
+
+# Method to create rating and handle errors
+def create_or_update_rating(user, book, rating_value)
+  rating = Rating.find_or_initialize_by(user: user, book: book)
+  rating.rating = rating_value
+  if rating.save
+    puts "Rating of #{rating_value} for '#{book.title}' by #{user.email} created/updated successfully."
+  else
+    puts "Error creating/updating rating for '#{book.title}': #{rating.errors.full_messages.join(', ')}"
+  end
+end
+
+# Example Ratings
+create_or_update_rating(user1, book1, 5)
+create_or_update_rating(user1, book2, 4)
+create_or_update_rating(user2, book3, 3)
+create_or_update_rating(user2, book4, 2)

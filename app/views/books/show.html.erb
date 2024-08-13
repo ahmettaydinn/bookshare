@@ -1,23 +1,23 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-8">
-      <div class="card" style='width: 400px;'>
+      <div class="card" style="width: 400px;">
         <% if @book.image.attached? %>
           <div style="height: 300px; overflow: hidden;">
-            <%= image_tag @book.image, class: 'card-img-top', style: 'width: 100%; height: 100%; object-fit: contain;' %>
+            <%= image_tag @book.image, class: "card-img-top", style: "width: 100%; height: 100%; object-fit: contain;" %>
           </div>
         <% end %>
 
         <div class="card-body position-relative">
           <!-- Heart Icon -->
           <% if current_user.favorite_books.exists?(@book.id) %>
-            <%= form_with url: book_favorite_path(@book), method: :delete, local: true, class: 'd-inline' do %>
+            <%= form_with url: book_favorite_path(@book), method: :delete, local: true, class: "d-inline" do %>
               <button type="submit" class="btn p-0" style="background: none; border: none;">
                 <i class="bi bi-heart-fill text-danger" style="font-size: 1.5rem;"></i>
               </button>
             <% end %>
           <% else %>
-            <%= form_with url: book_favorite_path(@book), method: :post, local: true, class: 'd-inline' do %>
+            <%= form_with url: book_favorite_path(@book), method: :post, local: true, class: "d-inline" do %>
               <button type="submit" class="btn p-0" style="background: none; border: none;">
                 <i class="bi bi-heart text-danger" style="font-size: 1.5rem;"></i>
               </button>
@@ -27,18 +27,65 @@
           <h1 class="card-title"><%= @book.title %></h1>
           <p class="card-text"><%= @book.description %></p>
           <p class="card-text"><strong>Creator:</strong> <%= @user.email %></p>
-          <%= link_to 'Back to Books', root_path, class: "btn btn-primary" %>
-          <%= link_to 'Delete', @book, method: :delete, data: { confirm: 'Are you sure?', "turbo-method": :delete }, class: 'btn btn-danger ms-2' %>
+          <p class="card-text"><strong>Average Rating:</strong> <%= @book.average_rating %> / 5</p>
+
+          <div>
+            <!-- Rate Button -->
+            <%= link_to "Rate this Book", "#", class: "btn btn-secondary", data: { bs_toggle: "modal", bs_target: "#rateBookModal" } %>
+          </div>
+
+          <%= link_to "Back to Books", root_path, class: "btn btn-primary mt-2" %>
+          <%= link_to "Delete", @book, method: :delete, data: { confirm: "Are you sure?", "turbo-method": :delete }, class: "btn btn-danger ms-2 mt-2" %>
         </div>
       </div>
 
+      <!-- Rating Modal -->
+      <div class="modal fade" id="rateBookModal" tabindex="-1" aria-labelledby="rateBookModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="rateBookModalLabel">Rate <%= @book.title %></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+          <% if @rating.new_record? %>
+            <!-- Creating a new rating -->
+            <%= form_with(model: [@book, @rating], url: book_ratings_path(@book), method: :post, local: true) do |form| %>
+              <div class="form-group">
+                <%= form.label :rating, "Your Rating" %>
+                <%= form.select :rating, options_for_select(1..5), {}, class: "form-select" %>
+              </div>
+              <div class="modal-footer">
+                <%= form.submit "Submit Rating", class: "btn btn-primary" %>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            <% end %>
+          <% else %>
+            <!-- Updating an existing rating -->
+            <%= form_with(model: [@book, @rating], url: book_rating_path(@book, @rating), method: :patch, local: true) do |form| %>
+              <div class="form-group">
+                <%= form.label :rating, "Your Rating" %>
+                <%= form.select :rating, options_for_select(1..5, selected: @rating.rating), {}, class: "form-select" %>
+              </div>
+              <div class="modal-footer">
+                <%= form.submit "Submit Rating", class: "btn btn-primary" %>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            <% end %>
+          <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
       <div class="mt-4">
         <h3>Comments</h3>
         <% @book.comments.each do |comment| %>
           <div class="comment mb-2">
             <p><strong><%= comment.user.email %></strong>: <%= comment.body %></p>
             <% if comment.user == current_user %>
-              <%= link_to 'Delete Comment', book_comment_path(@book, comment), method: :delete, data: { confirm: 'Are you sure?', "turbo-method": :delete }, class: 'btn btn-danger btn-sm' %>
+              <%= link_to "Delete Comment", book_comment_path(@book, comment), method: :delete, data: { confirm: "Are you sure?", "turbo-method": :delete }, class: "btn btn-danger btn-sm" %>
             <% end %>
           </div>
         <% end %>
@@ -46,10 +93,10 @@
         <h4>Add a Comment</h4>
         <%= form_with(model: [@book, @comment], url: book_comments_path(@book), local: true) do |form| %>
           <div class="form-group">
-            <%= form.text_area :body, class: 'form-control', rows: 3 %>
+            <%= form.text_area :body, class: "form-control", rows: 3 %>
           </div>
           <div class="form-group mt-2">
-            <%= form.submit 'Submit', class: 'btn btn-primary' %>
+            <%= form.submit "Submit", class: "btn btn-primary" %>
           </div>
         <% end %>
       </div>

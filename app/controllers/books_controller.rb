@@ -18,6 +18,7 @@ class BooksController < ApplicationController
   def show
     @user = @book.user
     @comment = Comment.new
+    @rating = @book.ratings.find_or_initialize_by(user: current_user)
   end
 
   def destroy
