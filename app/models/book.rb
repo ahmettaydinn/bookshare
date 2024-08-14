@@ -16,4 +16,6 @@ class Book < ApplicationRecord
   def average_rating
     ratings.average(:rating).to_f.round(1)
   end
+
+  has_and_belongs_to_many :categories
 end

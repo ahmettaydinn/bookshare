@@ -23,6 +23,11 @@
       <%= form.label :description, class: 'form-label' %>
       <%= form.text_area :description, class: 'form-control', rows: 5, style: 'width: 600px;' %>
     </div>
+    
+    <div class="mb-3">
+      <%= form.label :category_ids, "Categories" %>
+      <%= form.collection_select :category_ids, Category.all, :id, :name, { multiple: true, prompt: "Select categories" }, { class: 'form-control' } %>
+    </div>
 
     <div class="mb-3">
       <%= form.label :image, 'Image', class: 'form-label' %>
