@@ -28,6 +28,10 @@
           <p class="card-text"><%= @book.description %></p>
           <p class="card-text"><strong>Creator:</strong> <%= @user.email %></p>
           <p class="card-text"><strong>Average Rating:</strong> <%= @book.average_rating %> / 5</p>
+          <p>
+          <strong>Categories:</strong>
+          <%= @book.categories.map(&:name).join(", ") %>
+          </p>
 
           <div>
             <!-- Rate Button -->
@@ -37,6 +41,7 @@
           <%= link_to "Back to Books", root_path, class: "btn btn-primary mt-2" %>
           <%= link_to "Delete", @book, method: :delete, data: { confirm: "Are you sure?", "turbo-method": :delete }, class: "btn btn-danger ms-2 mt-2" %>
         </div>
+        
       </div>
 
       <!-- Rating Modal -->
